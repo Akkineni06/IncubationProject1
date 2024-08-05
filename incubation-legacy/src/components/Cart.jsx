@@ -1,24 +1,79 @@
 import React from 'react';
 
-const Cart = ({ cart }) => {
-  const getTotalItems = () => {
-    return cart.length;
+const Cart = ({ cart, setCart, items, setItems }) => {
+
+  const updateQuantity = (item, delta) => {
+    const cartIndex = cart.findIndex(i => i.id === item.id);
+    const itemIndex = items.findIndex(i => i.id === item.id);
+
+    if (cartIndex !== -1) {
+      const updatedCart = [...cart];
+      const updatedItems = [...items];
+      const cartItem = updatedCart[cartIndex];
+
+      // Update quantity in cart
+      if (delta === -1 && cartItem.quantity === 1) {
+        updatedCart.splice(cartIndex, 1);
+      } else {
+        cartItem.quantity += delta;
+      }
+
+      // Update stock in items
+      if (itemIndex !== -1) {
+        updatedItems[itemIndex].inStock -= delta;
+        if (updatedItems[itemIndex].inStock < 0) {
+          updatedItems[itemIndex].inStock = 0;
+        }
+      } else if (delta === 1) {
+        // Item not found in stock, do not allow incrementing
+        return;
+      }
+
+      // Remove item from items if stock goes to 0
+      if (updatedItems[itemIndex] && updatedItems[itemIndex].inStock === 0) {
+        updatedItems.splice(itemIndex, 1);
+      }
+
+      setCart(updatedCart);
+      setItems(updatedItems);
+    }
   };
 
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price, 0).toFixed(2);
-  };
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
 
   return (
     <div>
       <h2>Cart</h2>
-      <p>Total Items: {getTotalItems()}</p>
-      <p>Total Price: ${getTotalPrice()}</p>
-      <ul>
-        {cart.map((item, index) => (
-          <li key={index}>{item.name} - ${item.price.toFixed(2)}</li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Item Price</th>
+            <th>Item Quantity</th>
+            {/* <th>Action</th> */}
+          </tr>
+        </thead>
+        <tbody>
+          {cart.map(item => (
+            <tr key={item.id}>
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.price.toFixed(2)}</td>
+              <td>{item.quantity}</td>
+              <td>
+                <button onClick={() => updateQuantity(item, 1)}>+</button>
+                <button onClick={() => updateQuantity(item, -1)}>-</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div>
+        <h3>Total Items: {totalItems}</h3>
+        <h3>Total Price: {totalPrice}</h3>
+      </div>
     </div>
   );
 };

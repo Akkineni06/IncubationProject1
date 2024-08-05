@@ -7,12 +7,39 @@ const ItemsPage = () => {
 
   useEffect(() => {
     fetch('/items.json')
-      .then(response => response.json())
-      .then(data => setItems(data));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => setItems(data))
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
   }, []);
 
   const addToCart = (item) => {
-    setCart([...cart, item]);
+    const itemIndex = items.findIndex(i => i.id === item.id);
+    if (itemIndex !== -1 && items[itemIndex].inStock > 0) {
+      // Update stock
+      const updatedItems = [...items];
+      updatedItems[itemIndex].inStock -= 1;
+      if (updatedItems[itemIndex].inStock === 0) {
+        updatedItems.splice(itemIndex, 1);
+      }
+      setItems(updatedItems);
+
+      // Update cart
+      const cartIndex = cart.findIndex(i => i.id === item.id);
+      if (cartIndex !== -1) {
+        const updatedCart = [...cart];
+        updatedCart[cartIndex].quantity += 1;
+        setCart(updatedCart);
+      } else {
+        setCart([...cart, { ...item, quantity: 1 }]);
+      }
+    }
   };
 
   return (
@@ -33,7 +60,7 @@ const ItemsPage = () => {
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>{item.name}</td>
-              <td>${item.price.toFixed(2)}</td>
+              <td>{item.price.toFixed(2)}</td>
               <td>{item.inStock}</td>
               <td>
                 <button onClick={() => addToCart(item)}>Add to Cart</button>
@@ -42,7 +69,7 @@ const ItemsPage = () => {
           ))}
         </tbody>
       </table>
-      <Cart cart={cart} />
+      <Cart cart={cart} setCart={setCart} items={items} setItems={setItems} />
     </div>
   );
 };
