@@ -13,20 +13,14 @@ const AddNewItem = ({ items, setItems }) => {
         if (!itemQuantity || isNaN(parseInt(itemQuantity, 10)) || parseInt(itemQuantity, 10) <= 0) newErrors.itemQuantity = 'Valid Quantity is required';
 
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        return Object.keys(newErrors).length == 0;
     };
 
     const handleAddNewItem = () => {
         if (!validateFields()) return;
 
-        // Check if items is initialized
-        if (!items) {
-            console.error("Items array is undefined or not passed correctly.");
-            return; // Early return if items is not initialized
-        }
-
         const newItem = {
-            id: items.length + 1, // Use the length of items to assign a new ID
+            id: items.length + 1,
             name: itemName,
             price: parseFloat(itemPrice).toFixed(2),
             inStock: parseInt(itemQuantity, 10)
@@ -34,7 +28,6 @@ const AddNewItem = ({ items, setItems }) => {
 
         setItems([...items, newItem]);
 
-        // Reset form fields after adding the new item
         setItemName('');
         setItemPrice('');
         setItemQuantity('');
@@ -42,29 +35,23 @@ const AddNewItem = ({ items, setItems }) => {
     };
 
     return (
-        <div>
+        <div className="add-new-item-card">
             <h2>Add New Item</h2>
-            <div>
-                <label>
-                    Item Name:
-                    <input type="text" value={itemName} onChange={(e) => setItemName(e.target.value)} style={{ borderColor: errors.itemName ? 'red' : '' }} />
-                </label>
-                {errors.itemName && <span style={{ color: 'red' }}>{errors.itemName}</span>}
+            <div className="form-field">
+                <label>Item Name:</label>
+                <input type="text" value={itemName} onChange={(e) => setItemName(e.target.value)} style={{ borderColor: errors.itemName ? 'red' : '' }} />
             </div>
-            <div>
-                <label>
-                    Item Price:
-                    <input type="number" step="0.01" value={itemPrice} onChange={(e) => setItemPrice(e.target.value)} style={{ borderColor: errors.itemPrice ? 'red' : '' }} />
-                </label>
-                {errors.itemPrice && <span style={{ color: 'red' }}>{errors.itemPrice}</span>}
+            {errors.itemName && <span style={{ color: 'red' }}>{errors.itemName}</span>}
+            <div className="form-field">
+                <label>Item Price (£):</label>
+                <input type="number" step="0.01" value={itemPrice} onChange={(e) => setItemPrice(e.target.value)} style={{ borderColor: errors.itemPrice ? 'red' : '' }} />
             </div>
-            <div>
-                <label>
-                    Quantity to Add:
-                    <input type="number" value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} style={{ borderColor: errors.itemQuantity ? 'red' : '' }} />
-                </label>
-                {errors.itemQuantity && <span style={{ color: 'red' }}>{errors.itemQuantity}</span>}
+            {errors.itemPrice && <span style={{ color: 'red' }}>{errors.itemPrice}</span>}
+            <div className="form-field">
+                <label>Quantity to Add:</label>
+                <input type="number" value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} style={{ borderColor: errors.itemQuantity ? 'red' : '' }} />
             </div>
+            {errors.itemQuantity && <span style={{ color: 'red' }}>{errors.itemQuantity}</span>}
             <button onClick={handleAddNewItem}>Add New Item</button>
         </div>
     );

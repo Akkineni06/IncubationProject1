@@ -5,7 +5,7 @@ const CustomerItemsTable = ({ items, addToCart }) => {
     <table>
       <thead>
         <tr>
-          <th>Customer Table Item ID</th>
+          <th>Item ID</th>
           <th>Item Name</th>
           <th>Item Price</th>
           <th>Currently In Stock</th>

@@ -53,7 +53,7 @@ const AdminItemsTable = ({ items, setItems }) => {
     <table>
       <thead>
         <tr>
-          <th>Admin Table Item ID</th>
+          <th>Item ID</th>
           <th>Item Name</th>
           <th>Item Price</th>
           <th>Currently In Stock</th>

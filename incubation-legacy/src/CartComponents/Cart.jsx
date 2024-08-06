@@ -65,7 +65,7 @@ const Cart = ({ cart, setCart, items, setItems }) => {
 
   return (
     <div>
-      <h2>Cart</h2>
+      <h2>Your Cart</h2>
       <table>
         <thead>
           <tr>
@@ -93,7 +93,7 @@ const Cart = ({ cart, setCart, items, setItems }) => {
       </table>
       <div>
         <h3>Total Items: {totalItems}</h3>
-        <h3>Total Price: {totalPrice}</h3>
+        <h1>Total Price: £{totalPrice}</h1>
       </div>
     </div>
   );

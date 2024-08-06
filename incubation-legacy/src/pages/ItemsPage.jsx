@@ -3,6 +3,8 @@ import CustomerItemsTable from '../ProductComponents/CustomerItemsTable';
 import Cart from '../CartComponents/Cart';
 import AddNewItem from '../ProductComponents/AddNewItem';
 import AdminItemsTable from '../ProductComponents/AdminItemsTable';
+import '../CSS/ItemsPage.css';
+
 
 const ItemsPage = () => {
     const [items, setItems] = useState([]);
@@ -17,11 +19,17 @@ const ItemsPage = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Items</h1>
-            <CustomerItemsTable items={items} />
-            <AdminItemsTable items={items} setItems={setItems} />
-            <Cart cart={cart} />
+        <div className="main-container">
+            <div className="cart-container card">
+                <Cart cart={cart} />
+            </div>
+            
+            <div className="card">
+                <CustomerItemsTable items={items} />
+            </div>
+            <div className="card">
+                <AdminItemsTable items={items} setItems={setItems} />
+            </div>
             <AddNewItem items={items} setItems={setItems} />
         </div>
     );
