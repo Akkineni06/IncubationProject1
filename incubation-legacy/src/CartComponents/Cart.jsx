@@ -2,6 +2,25 @@ import React from 'react';
 
 const Cart = ({ cart, setCart, items, setItems }) => {
 
+  const updateCartItemInDatabase = (cartItem) => {
+    fetch(`/api/cart/${cartItem.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cartItem),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Cart item updated:', data))
+    .catch(error => console.error('Failed to update cart item:', error));
+  };
+
+  const deleteCartItemInDatabase = (cartItemId) => {
+    fetch(`/api/cart/${cartItemId}`, {
+      method: 'DELETE'
+    })
+    .then(() => console.log('Cart item deleted'))
+    .catch(error => console.error('Failed to delete cart item:', error));
+  };
+
   const updateQuantity = (item, delta) => {
     const cartIndex = cart.findIndex(i => i.id === item.id);
     const itemIndex = items.findIndex(i => i.id === item.id);
@@ -14,8 +33,10 @@ const Cart = ({ cart, setCart, items, setItems }) => {
       // Update quantity in cart
       if (delta === -1 && cartItem.quantity === 1) {
         updatedCart.splice(cartIndex, 1);
+        deleteCartItemInDatabase(cartItem.id);
       } else {
         cartItem.quantity += delta;
+        updateCartItemInDatabase(cartItem);
       }
 
       // Update stock in items
@@ -52,7 +73,7 @@ const Cart = ({ cart, setCart, items, setItems }) => {
             <th>Item Name</th>
             <th>Item Price</th>
             <th>Item Quantity</th>
-            {/* <th>Action</th> */}
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
