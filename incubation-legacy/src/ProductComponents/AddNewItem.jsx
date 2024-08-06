@@ -36,7 +36,7 @@ const AddNewItem = ({ items, setItems }) => {
 
     return (
         <div className="add-new-item-card">
-            <h2>Add New Item</h2>
+            <h2>Add Item to Stock</h2>
             <div className="form-field">
                 <label>Item Name:</label>
                 <input type="text" value={itemName} onChange={(e) => setItemName(e.target.value)} style={{ borderColor: errors.itemName ? 'red' : '' }} />
@@ -52,7 +52,7 @@ const AddNewItem = ({ items, setItems }) => {
                 <input type="number" value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} style={{ borderColor: errors.itemQuantity ? 'red' : '' }} />
             </div>
             {errors.itemQuantity && <span style={{ color: 'red' }}>{errors.itemQuantity}</span>}
-            <button onClick={handleAddNewItem}>Add New Item</button>
+            <button onClick={handleAddNewItem}>Add Item </button>
         </div>
     );
 };

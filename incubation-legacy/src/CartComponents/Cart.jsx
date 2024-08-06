@@ -92,7 +92,7 @@ const Cart = ({ cart, setCart, items, setItems }) => {
         </tbody>
       </table>
       <div>
-        <h3>Total Items: {totalItems}</h3>
+        <h3>Items in Cart: {totalItems}</h3>
         <h1>Total Price: £{totalPrice}</h1>
       </div>
     </div>

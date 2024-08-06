@@ -92,6 +92,7 @@ th {
 /* Button styling within tables */
 button {
     padding: 10px 20px;
+    width: 860px;
     border: none;
     background-color: #4a4a4a;
     color: white;
