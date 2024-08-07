@@ -99,6 +99,7 @@ button {
     border-radius: 0px;
     cursor: pointer;
     margin-right: 5px;
+    text-size-adjust: 300px;
 }
 
 button:hover {
