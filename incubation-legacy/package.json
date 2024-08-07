@@ -34,6 +34,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
+    ],
+    "devDependencies": {
+    "webpack": "^5.x",
+    "webpack-cli": "^4.x",
+    "webpack-dev-server": "^3.x"
+    }
   }
 }
