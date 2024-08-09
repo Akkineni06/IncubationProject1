@@ -22,7 +22,13 @@ module.exports = {
         './Cart': './src/CartComponents/Cart',
         './UseCart': './src/CartComponents/UseCart'
       },
-      shared: ['react', 'react-dom'],
+    //   remotes: {
+    //     ProductModule: 'ProductModule@http://localhost:3001/remoteEntry.js',
+    //   },
+      shared: { 
+        "react": { singleton: true, eager: true },
+        "react-dom": { singleton: true, eager: true }
+      }
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',

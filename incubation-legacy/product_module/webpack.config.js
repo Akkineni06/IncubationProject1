@@ -19,13 +19,14 @@ module.exports = {
       name: 'ProductModule',
       filename: 'remoteEntry.js',
       exposes: {
-        './AddNewItem': './src/ProductComponents/AddNewItem',
-        './AdminItemCard': './src/ProductComponents/AdminItemCard',
-        './AdminItemsTable': './src/ProductComponents/AdminItemsTable',
         './CustomerItemsTable': './src/ProductComponents/CustomerItemsTable',
-        './ItemCard': './src/ProductComponents/ItemCard',
-        },
-      shared: ['react', 'react-dom'],
+        './AdminItemsTable': './src/ProductComponents/AdminItemsTable',
+        './AddNewItem': './src/ProductComponents/AddNewItem'
+      },
+      shared: { 
+        "react": { singleton: true, eager: true },
+        "react-dom": { singleton: true, eager: true }
+      }
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',

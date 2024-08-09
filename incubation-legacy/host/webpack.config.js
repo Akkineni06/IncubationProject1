@@ -5,21 +5,21 @@ const path = require('path');
 module.exports = {
   entry: './src/index.js',
   output: {
-    publicPath: 'http://localhost:8080/',
+    publicPath: 'http://localhost:3000/',
   },
   mode: 'development',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    port: 8080,
+    port: 3000,
   },
   plugins: [
     new ModuleFederationPlugin({
       name: 'Host',
       remotes: {
-        ProductModule: 'product@http://localhost:3001/remoteEntry.js',
-        CartModule: 'cart@http://localhost:3002/remoteEntry.js',
+        ProductModule: 'ProductModule@http://localhost:3001/remoteEntry.js',
+        CartModule: 'CartModule@http://localhost:3002/remoteEntry.js',
       },
-      shared: ['react', 'react-dom'],
+      shared: { react: { singleton: true }, "react-dom": { singleton: true } },
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',

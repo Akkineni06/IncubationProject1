@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import CustomerItemsTable from '../ProductComponents/CustomerItemsTable';
-import Cart from '../CartComponents/Cart';
 import AddNewItem from '../ProductComponents/AddNewItem';
 import AdminItemsTable from '../ProductComponents/AdminItemsTable';
-import '../CSS/ItemsPage.css';
+import ItemCard from '../ProductComponents/ItemCard'; 
+import '../CSS/Host.css';
+import Cart from 'CartModule/Cart';
 
 
 const ItemsPage = () => {
@@ -11,12 +11,17 @@ const ItemsPage = () => {
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        // Fetch items from an API
+        // Fetch items via API
         fetch('/api/items')
             .then(response => response.json())
             .then(data => setItems(data))
             .catch(error => console.error('Failed to load items', error));
     }, []);
+
+    const addToCart = (item) => {
+        console.log('Adding to cart:', item);
+        // Implement adding to cart logic /update the cart / API call
+    };
 
     return (
         <div className="main-container">
@@ -24,13 +29,17 @@ const ItemsPage = () => {
                 <Cart cart={cart} />
             </div>
             
-            <div className="card">
-                <CustomerItemsTable items={items} />
-            </div>
+            {/* Render Item Cards directly */}
+            {items.map(item => (
+                <ItemCard key={item.id} item={item} addToCart={addToCart} />
+            ))}
+
             <div className="card">
                 <AdminItemsTable items={items} setItems={setItems} />
             </div>
             <AddNewItem items={items} setItems={setItems} />
+
+            <div><Cart /></div>
         </div>
     );
 };
