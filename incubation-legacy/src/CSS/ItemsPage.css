@@ -1,0 +1,125 @@
+/* General body and layout styles */
+body {
+    font-family: 'Wix Madefor Display', Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Main container for the ItemsPage */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    padding: 100px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: fixed;
+
+}
+
+/* Card styling for different components */
+.card {
+    background-color: #fff;
+    border-radius: 0px;
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
+    padding: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.add-new-item-card {
+    background-color: #fff;
+    border-radius: 0px;
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
+    padding: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/* Form field container styling */
+.form-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+/* Adjust label width to ensure consistent alignment */
+label {
+    flex-basis: 30%; /* Adjust based on your preference */
+    margin: 0; /* Resetting margin for better alignment control */
+    padding-right: 10px; /* Spacing between label and input */
+}
+
+/* Styling for inputs to align them to the right */
+input[type="text"], input[type="number"] {
+    flex-grow: 1; /* Allows input to take up the remaining space */
+    padding: 5px;
+    margin: 0; /* Resetting margin for alignment */
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 0px;
+}
+
+/* Specific styles for the Cart component */
+.cart-container {
+    width: 800px;
+    position: fixed;
+    right: 100px;
+    top: 100px;
+}
+
+/* Table styling for uniform look */
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-top: 0px;
+}
+
+/* Table header & table cells (td) */
+th, td {
+    text-align: center;
+    padding: 8px;
+    border-bottom: 0px solid #ddd;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+/* Button styling within tables */
+button {
+    padding: 10px 20px;
+    width: 860px;
+    border: none;
+    background-color: #4a4a4a;
+    color: white;
+    border-radius: 0px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+button:hover {
+    background-color: #191919;
+}
+
+/* Input field styling */
+input[type="text"], input[type="number"] {
+    padding: 5px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 0px;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    border-color: #007BFF;
+}
+
+/* Adjusting margins for labels */
+label {
+    display: block;
+    margin: 5px 0;
+}
