@@ -8,7 +8,7 @@ import java.util.Objects;
 public class CartItem {
 	
 	private Long id;
-	private Product product;
+	private List<Product> products;
 	
 
 	public Long getId() {
@@ -19,13 +19,14 @@ public class CartItem {
 		this.id = id;
 	}
 
-	public Product getProduct() {
-		return product;
+	public List<Product> getProducts() {
+		return products;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
+
 //
 //	@Override
 //	public String toString() {

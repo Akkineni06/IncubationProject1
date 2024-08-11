@@ -29,6 +29,12 @@ public class CartController {
         return this.service.getCart(id);
     }
 
+    @GetMapping("/getTotal/{id}")
+    public double getCartTotal(@PathVariable Long id) {
+        return this.service.getCartTotal(id);
+    }
+
+
     @PostMapping("/create")
     public Cart createCart(@RequestBody Cart cart) {
         return this.service.createCart(cart);

@@ -10,18 +10,25 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long itemId;
+//    private Long itemId;
 
-    //    @ElementCollection
-//    private List<Long> itemId;
+    @ElementCollection
+    private List<Long> itemIds;
 
 
     public Cart() {
     }
 
-    public Cart(Long id, Long itemId) {
-        this.id = id;
-        this.itemId = itemId;
+    public Cart(List<Long> itemIds) {
+        this.itemIds = itemIds;
+    }
+
+    public List<Long> getItemIds() {
+        return itemIds;
+    }
+
+    public void setItemIds(List<Long> itemIds) {
+        this.itemIds = itemIds;
     }
 
     public Long getId() {
@@ -32,13 +39,7 @@ public class Cart {
         this.id = id;
     }
 
-    public Long getItemId() {
-        return itemId;
-    }
 
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
-    }
 
 //    @Override
 //    public String toString() {
