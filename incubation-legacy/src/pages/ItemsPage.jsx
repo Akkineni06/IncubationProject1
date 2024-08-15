@@ -11,7 +11,7 @@ const ItemsPage = () => {
 
     useEffect(() => {
         // Fetch items from an API
-        fetch('/items.json')
+        fetch('http://localhost:8765/PRODUCT-SERVICE/product/listAll')
             .then((response) => response.json())
             .then((data) => setItems(data))
             .catch(error => console.error('Failed to load items', error));

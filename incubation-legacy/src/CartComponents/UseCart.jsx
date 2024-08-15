@@ -20,7 +20,7 @@ const useCart = (initialItems = []) => {
 
   const addToCartDatabase = (cartItem) => {
     // API call to add item to cart in the database
-    fetch('/api/cart', {
+    fetch('http://localhost:8082/cart/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(cartItem),

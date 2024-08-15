@@ -5,7 +5,7 @@ const AdminItemsTable = ({ items, setItems }) => {
   const [editItem, setEditItem] = useState({
     name: '',
     price: '',
-    inStock: '',
+    quantity: '',
   });
 
   const handleEdit = (index) => {
@@ -13,13 +13,13 @@ const AdminItemsTable = ({ items, setItems }) => {
     setEditItem({
       name: items[index].name,
       price: items[index].price,
-      inStock: items[index].inStock,
+      quantity: items[index].quantity,
     });
   };
 
   const handleSave = (id) => {
     const updatedItems = items.map(item =>
-        item.id === id ? {...item, name: editItem.name, price: parseFloat(editItem.price), inStock: parseInt(editItem.inStock, 10)} : item
+        item.id === id ? {...item, name: editItem.name, price: parseFloat(editItem.price), quantity: parseInt(editItem.quantity, 10)} : item
     );
     setItems(updatedItems);
     setEditIndex(null);
@@ -81,12 +81,12 @@ const handleDelete = (id) => {
               {editIndex === index ? (
                 <input
                   type="text"
-                  name="inStock"
-                  value={editItem.inStock}
+                  name="quantity"
+                  value={editItem.quantity}
                   onChange={handleInputChange}
                 />
               ) : (
-                item.inStock
+                item.quantity
               )}
             </td>
             <td>

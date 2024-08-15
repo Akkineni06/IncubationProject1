@@ -21,7 +21,7 @@ const CustomerItemsTable = ({ items, addToCart }) => {
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>£{price}</td>
-              <td>{item.inStock}</td>
+              <td>{item.quantity}</td>
               <td>
                 <button onClick={() => addToCart(item)} className="add-to-cart-button">Add to Cart</button>
               </td>

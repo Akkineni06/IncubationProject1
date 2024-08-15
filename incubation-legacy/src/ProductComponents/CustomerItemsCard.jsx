@@ -8,7 +8,7 @@ const CustomerItemsCard = ({ items, addToCart }) => {
               <div className="item-card-content">
                 <h3>{item.name}</h3>
                 <p>Price: £{price}</p>
-                <p>In Stock: {item.inStock}</p>
+                <p>In Stock: {item.quantity}</p>
                 <button onClick={() => addToCart(item)} className="add-to-cart-button">Add to Cart</button>
               </div>
             </div>
