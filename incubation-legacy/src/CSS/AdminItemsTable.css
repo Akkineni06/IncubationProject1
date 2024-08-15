@@ -1,0 +1,47 @@
+.admin_items_table {
+    position: fixed;
+    left: 30px;
+    top: 165px;
+    max-width: 70%; /* Prevents going off-screen on small devices */
+    overflow-x: hidden; /* Hide horizontal overflow */
+    overflow-y: auto; /* Allows vertical scrolling within the element if needed */
+    width: 70%;
+    background-color: #ffffff;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: x-large;
+}
+
+/* Table styling for uniform look */
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+/* Table header & table cells (td) */
+th, td {
+    text-align: center;
+    padding: 8px;
+    border-bottom: 5px solid #eee;
+}
+
+th {
+    background-color: #ffffff;
+}
+
+/* Button styling within tables */
+button {
+    padding: 10px 20px;
+    width: 163px;
+    /* border: medium solid white; */
+    background-color: #4a4a4a;
+    color: white;
+    border-radius: 0px;
+    cursor: pointer;
+    margin-right: 5px;
+    margin: 2px;
+    font-size: x-large;
+    font-family: 'Wix Madefor Display', Helvetica, sans-serif;
+}
+
