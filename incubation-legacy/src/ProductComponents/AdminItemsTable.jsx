@@ -9,14 +9,13 @@ const AdminItemsTable = ({ items, setItems }) => {
   });
 
   useEffect(() => {
-    // Fetch items from the backend
-    fetch('http://localhost:8765/product-service/product/listAll')
+    fetch('http://localhost:5000/items')
       .then(response => response.json())
       .then(data => {
-        setItems(data); // Set the fetched items in state
+        setItems(data);
       })
       .catch(error => console.error('Failed to load items:', error));
-  }, [setItems]); // Dependency array ensures this runs once when component mounts
+  }, [setItems]);
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -34,33 +33,29 @@ const AdminItemsTable = ({ items, setItems }) => {
     setItems(updatedItems);
     setEditIndex(null);
 
-    // API call to update the item in the database
-    fetch(`http://localhost:8765/product-service/product/update/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(editItem),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Item updated:', data);
-      })
-      .catch(error => console.error('Failed to update item:', error));
+    saveItemsToJsonFile(updatedItems);
   };
 
   const handleDelete = (id) => {
     const updatedItems = items.filter(item => item.id !== id);
     setItems(updatedItems);
 
-    // API call to delete the item from the database
-    fetch(`http://localhost:8765/product-service/product/delete/${id}`, {
-      method: 'DELETE',
+    saveItemsToJsonFile(updatedItems);
+  };
+
+  const saveItemsToJsonFile = (updatedItems) => {
+    fetch('http://localhost:5000/update-items', {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedItems),
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Item deleted:', data);
-      })
-      .catch(error => console.error('Failed to delete item:', error));
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to update items');
+      }
+      return response.json();
+    })
+    .catch(error => console.error('Failed to update items:', error));
   };
 
   const handleInputChange = (e) => {

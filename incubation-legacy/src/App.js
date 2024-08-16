@@ -10,13 +10,12 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Navbar />
-    <Routes>
-      <Route path='/' element={<ItemsPage />} />
-          <Route path='/page_b' element={<page_b />} />
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<ItemsPage />} />
           <Route path='/admin' element={<AdminPage />} />
-    </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

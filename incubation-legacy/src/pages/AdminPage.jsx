@@ -5,14 +5,11 @@ import '../CSS/ItemsPage.css';
 import '../CSS/AdminItemsTable.css';
 import '../CSS/AddNewItem.css';
 
-
 const AdminPage = () => {
     const [items, setItems] = useState([]);
-    const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        // Fetch items from an API
-        fetch('http://localhost:8765/PRODUCT-SERVICE/product/listAll')
+        fetch('http://localhost:5000/items')
             .then((response) => response.json())
             .then((data) => setItems(data))
             .catch(error => console.error('Failed to load items', error));
@@ -23,7 +20,9 @@ const AdminPage = () => {
             <div className="card">
                 <AdminItemsTable items={items} setItems={setItems} />
             </div>
-            {<AddNewItem items={items} setItems={setItems} />}
+            <div className="card">
+                <AddNewItem items={items} setItems={setItems} />
+            </div>
         </div>
     );
 };

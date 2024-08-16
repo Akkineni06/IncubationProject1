@@ -22,38 +22,40 @@ const AddNewItem = ({ items, setItems }) => {
     if (!validateFields()) return;
 
     const newItem = {
+      id: items.length ? items[items.length - 1].id + 1 : 1,
       name: name,
       price: parseFloat(price),
       quantity: parseInt(quantity, 10),
     };
 
-    // API call to add a new item to the backend
-    fetch('http://localhost:8765/product-service/product/create', {
+    const updatedItems = [...items, newItem];
+    setItems(updatedItems);
+
+    saveItemsToJsonFile(updatedItems);
+  };
+
+  const saveItemsToJsonFile = (updatedItems) => {
+    fetch('http://localhost:5000/update-items', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newItem),
-      credentials: 'include' // If you need to include cookies or auth headers
+      body: JSON.stringify(updatedItems),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to add new item');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setItems([...items, data]);
-        console.log('New item added:', data);
-
-        // Reset form fields
-        setItemName('');
-        setItemPrice('');
-        setItemQuantity('');
-        setErrors({});
-      })
-      .catch((error) => {
-        console.error('Failed to add new item:', error);
-        setErrors({ submit: 'Failed to add new item. Please try again.' });
-      });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to update items');
+      }
+      return response.json();
+    })
+    .then(() => {
+      setItemName('');
+      setItemPrice('');
+      setItemQuantity('');
+      setErrors({});
+    })
+    .catch(error => {
+      console.error('Failed to add new item:', error);
+      setErrors({ submit: 'Failed to add new item. Please try again.' });
+    });
   };
 
   return (

@@ -3,33 +3,6 @@ import '../CSS/Cart.css';
 
 const Cart = ({ cart, setCart, items, setItems }) => {
 
-  const updateCartItemInDatabase = (cartItem) => {
-    // API call to update item quantity in the cart
-    fetch('http://localhost:8765/cart-service/cart/update', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(cartItem),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Cart item updated:', data);
-    })
-    .catch(error => console.error('Failed to update cart item:', error));
-  };
-
-  const deleteCartItemInDatabase = (cartItemId) => {
-    // API call to delete item from the cart
-    fetch(`http://localhost:8765/cart-service/cart/delete/${cartItemId}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Cart item deleted:', data);
-    })
-    .catch(error => console.error('Failed to delete cart item:', error));
-  };
-
   const updateQuantity = (item, delta) => {
     const cartIndex = cart.findIndex(i => i.id === item.id);
     const itemIndex = items.findIndex(i => i.id === item.id);
@@ -39,27 +12,22 @@ const Cart = ({ cart, setCart, items, setItems }) => {
       const updatedItems = [...items];
       const cartItem = updatedCart[cartIndex];
 
-      // Update quantity in cart
       if (delta === -1 && cartItem.quantity === 1) {
         updatedCart.splice(cartIndex, 1);
-        deleteCartItemInDatabase(cartItem.id);
       } else {
         cartItem.quantity += delta;
-        updateCartItemInDatabase(cartItem);
       }
 
-      // Update stock in items
       if (itemIndex !== -1) {
-        updatedItems[itemIndex].inStock -= delta;
-        if (updatedItems[itemIndex].inStock < 0) {
-          updatedItems[itemIndex].inStock = 0;
+        updatedItems[itemIndex].quantity -= delta;
+        if (updatedItems[itemIndex].quantity < 0) {
+          updatedItems[itemIndex].quantity = 0;
         }
       } else if (delta === 1) {
-        return; // Item not found in stock, do not allow incrementing
+        return;
       }
 
-      // Remove item from items if stock goes to 0
-      if (updatedItems[itemIndex] && updatedItems[itemIndex].inStock === 0) {
+      if (updatedItems[itemIndex] && updatedItems[itemIndex].quantity === 0) {
         updatedItems.splice(itemIndex, 1);
       }
 
