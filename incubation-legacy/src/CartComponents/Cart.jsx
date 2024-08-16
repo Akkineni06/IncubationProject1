@@ -4,21 +4,31 @@ import '../CSS/Cart.css';
 const Cart = ({ cart, setCart, items, setItems }) => {
 
   const updateCartItemInDatabase = (cartItem) => {
-    // Directly manipulate local state instead of making an API call
-    const updatedItems = items.map(item =>
-        item.id === cartItem.id ? {...item, quantity: item.quantity - cartItem.quantity} : item
-    );
-    setItems(updatedItems);
-    console.log('Cart item updated:', cartItem);
-};
+    // API call to update item quantity in the cart
+    fetch('http://localhost:8765/cart-service/cart/update', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cartItem),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Cart item updated:', data);
+    })
+    .catch(error => console.error('Failed to update cart item:', error));
+  };
 
-const deleteCartItemInDatabase = (cartItemId) => {
-    // Remove the item from the cart locally
-    const updatedCart = cart.filter(item => item.id !== cartItemId);
-    setCart(updatedCart);
-    console.log('Cart item deleted');
-};
-
+  const deleteCartItemInDatabase = (cartItemId) => {
+    // API call to delete item from the cart
+    fetch(`http://localhost:8765/cart-service/cart/delete/${cartItemId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Cart item deleted:', data);
+    })
+    .catch(error => console.error('Failed to delete cart item:', error));
+  };
 
   const updateQuantity = (item, delta) => {
     const cartIndex = cart.findIndex(i => i.id === item.id);
@@ -45,8 +55,7 @@ const deleteCartItemInDatabase = (cartItemId) => {
           updatedItems[itemIndex].inStock = 0;
         }
       } else if (delta === 1) {
-        // Item not found in stock, do not allow incrementing
-        return;
+        return; // Item not found in stock, do not allow incrementing
       }
 
       // Remove item from items if stock goes to 0

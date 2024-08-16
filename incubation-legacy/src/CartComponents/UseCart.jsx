@@ -6,28 +6,28 @@ const useCart = (initialItems = []) => {
 
   const updateItemStockInDatabase = (item) => {
     // API call to update item stock in the database
-    fetch(`/api/products/${item.id}`, {
+    fetch('http://localhost:8765/product-service/products/' + item.id, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(item),
     })
     .then(response => response.json())
     .then(data => {
-      // Handle response if needed
+      console.log('Item stock updated:', data);
     })
     .catch(error => console.error('Failed to update item stock:', error));
   };
 
   const addToCartDatabase = (cartItem) => {
     // API call to add item to cart in the database
-    fetch('http://localhost:8082/cart/create', {
+    fetch('http://localhost:8765/cart-service/cart/add', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(cartItem),
     })
     .then(response => response.json())
     .then(data => {
-      // Handle response if needed
+      console.log('Cart item added:', data);
     })
     .catch(error => console.error('Failed to add item to cart:', error));
   };
@@ -42,9 +42,11 @@ const useCart = (initialItems = []) => {
         updatedItems.splice(itemIndex, 1);
       }
       setItems(updatedItems);
-      updateItemStockInDatabase({ ...updatedItems[itemIndex], inStock: updatedItems[itemIndex].inStock });
 
-      // Update cart
+      // Update item stock in the database
+      updateItemStockInDatabase({ ...updatedItems[itemIndex], inStock: updatedItems[itemIndex]?.inStock || 0 });
+
+      // Update cart locally
       const cartIndex = cart.findIndex(i => i.id === item.id);
       if (cartIndex !== -1) {
         const updatedCart = [...cart];
@@ -53,6 +55,8 @@ const useCart = (initialItems = []) => {
       } else {
         const newCartItem = { ...item, quantity: 1 };
         setCart([...cart, newCartItem]);
+
+        // Add item to cart in the database
         addToCartDatabase(newCartItem);
       }
     }
